@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+encoding//src/account/TaiKhoanDao.java=UTF-8
+encoding//src/class_room/LopDao.java=UTF-8
+encoding//src/connection/ConnectPeople.java=UTF-8
+encoding//src/display/View.java=UTF-8
+encoding//src/login/Login.java=UTF-8
+encoding//src/point/DiemHocSinhDao.java=UTF-8
+encoding//src/school_year/NienKhoaDao.java=UTF-8
+encoding//src/students/HoSoHSDao.java=UTF-8
+encoding//src/students/HocSinhDao.java=UTF-8
+encoding//src/subjects/MonHocDao.java=UTF-8
+encoding//src/summary/TongKetDao.java=UTF-8
+encoding//src/teacher/GiaoVienDao.java=UTF-8
+encoding//src/teacher/HoSoGVDao.java=UTF-8
+encoding/<project>=UTF-8
