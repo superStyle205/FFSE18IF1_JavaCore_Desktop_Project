@@ -1,0 +1,17 @@
+eclipse.preferences.version=1
+encoding//src/LoGin/LoginQLTH.java=UTF-8
+encoding//src/Model/bean/QuanLiGiaoVien.java=UTF-8
+encoding//src/QuanLiGiaoVien/JFrameQuanLiGiaoVien.java=UTF-8
+encoding//src/QuanLiGiaoVien/TabQuanLiGiaoVien.java=UTF-8
+encoding//src/QuanLiGiaoVien/TabThongTinGiaoVien.java=UTF-8
+encoding//src/QuanLiHocSinh/JFrameQuanLiHocSinh.java=UTF-8
+encoding//src/QuanLiHocSinh/TabBangDiem.java=UTF-8
+encoding//src/QuanLiHocSinh/TabHoSoHocSinh.java=UTF-8
+encoding//src/QuanLiHocSinh/TabKetQuaHocTap.java=UTF-8
+encoding//src/QuanLiHocSinh/TabQuanLiDiem.java=UTF-8
+encoding//src/QuanLiHocSinh/TabThongKeHocSinh.java=UTF-8
+encoding//src/QuanLiHocSinh/TabThongTinHocSinh.java=UTF-8
+encoding//src/QuanLiTaiKhoan/JFrameQuanLiTaiKhoan.java=UTF-8
+encoding//src/QuanLiTaiKhoan/TabDangKiTaiKhoan.java=UTF-8
+encoding//src/QuanLiTaiKhoan/TabDoiMatKhau.java=UTF-8
+encoding//src/TrangChu/TrangChu.java=UTF-8
