@@ -10,7 +10,8 @@ public class ConnectionUntil {
 	public Connection connect() {
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sqlquanlisinhvien?characterEncoding=UTF-8", "root", "");
+			connection = DriverManager
+					.getConnection("jdbc:mysql://localhost:3306/sqlquanlisinhvien?characterEncoding=UTF-8", "root", "");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

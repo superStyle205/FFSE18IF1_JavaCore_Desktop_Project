@@ -8,8 +8,9 @@ import java.sql.SQLException;
 import common.database.ConnectionUntil;
 
 public class UserDao {	
-	public boolean isLogint(String username, String password) {
-		String sql = "SELECT * FROM user WHERE username = ? and password = ? ";
+	public int isLogint(String username, String password) {
+		int flag =0;
+		String sql = "SELECT user_roles.roleid FROM user INNER JOIN user_roles ON  user.userid = user_roles.userid WHERE username = ? and password = ? ";
 		ConnectionUntil connnect = new ConnectionUntil();
 		Connection conn = connnect.connect();
 		try {
@@ -17,14 +18,17 @@ public class UserDao {
 			stsm.setString(1, username);
 			stsm.setString(2, password);
 			ResultSet result = stsm.executeQuery();
-			return result.next();
+			if(result.next()){
+				flag= Integer.parseInt(result.getString(1));
+				System.out.println(flag);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		} finally {
 			connnect.disconnect(conn);
 		}
-		return false;
+		return flag;
 	}
 	
 	public String getIdByUserName(String username){

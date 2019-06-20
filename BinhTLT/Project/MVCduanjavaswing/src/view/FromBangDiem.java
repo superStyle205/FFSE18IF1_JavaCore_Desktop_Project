@@ -247,6 +247,7 @@ public class FromBangDiem extends JFrame implements ActionListener, MouseListene
 		btnAdd.setPreferredSize(btnUpdate.getPreferredSize());
 		btnDelete.setPreferredSize(btnUpdate.getPreferredSize());
 		btnClean.setPreferredSize(btnUpdate.getPreferredSize());
+		btnClean.addActionListener(this);
 		btnExit.setPreferredSize(btnUpdate.getPreferredSize());
 
 		pnMain.add(pnButton);

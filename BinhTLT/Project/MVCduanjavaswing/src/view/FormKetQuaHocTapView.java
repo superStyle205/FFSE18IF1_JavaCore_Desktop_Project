@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -25,9 +26,13 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import model.bean.GiaoVien;
+import model.bean.KetQuaHocTap;
 import model.bean.Lop;
 import model.dao.KetQuaHocTapDao;
 import model.dao.LopHocDao;
+import model.dao.MonHocDao;
+import model.dao.TeaCherDao;
 
 public class FormKetQuaHocTapView extends JFrame implements ActionListener, MouseListener{
 
@@ -222,8 +227,20 @@ public class FormKetQuaHocTapView extends JFrame implements ActionListener, Mous
 				pntable.add(jScrollPane);
 
 				pnMain.add(pntable);
-
+				
+				loadgram();
 				return pnMain;
+	}
+	
+	public void loadgram() {
+		tablemodel.setRowCount(0);
+		KetQuaHocTapDao kqht = new KetQuaHocTapDao();
+
+		ArrayList<KetQuaHocTap> listGV = kqht.getAllUser();
+		for (KetQuaHocTap gv : listGV) {
+			tablemodel.addRow(new String[] { "" + gv.getMahocsinh(), gv.getMalop(), gv.getHoten(), gv.getHocluc(),
+					gv.getHanhkiem(),gv.getDiemtrungbinh(), gv.getXeploai(), gv.getTennienkhoa() });
+		}
 	}
 	
 	@Override
@@ -251,36 +268,39 @@ public class FormKetQuaHocTapView extends JFrame implements ActionListener, Mous
 
 	private void deleteUser() {
 		kthtdao = new KetQuaHocTapDao();
-//		+
+		kthtdao.deleteUser(	mhs.getText());
+
 
 	}
 
 	private void updateUser() {
-		Lop hs = new Lop();
-		hs.setMalop(malop.getSelectedItem().toString());
-		hs.setTenlop(txttenlop.getText());
-		hs.setGvchu_nghiem(txtgvch.getText());
-		hs.setMakhoa(makhoa.getSelectedItem().toString());
-		hs.setMakhoi(makhoi.getSelectedItem().toString());
-		hs.setTennienkhoa(nienkhoa.getSelectedItem().toString());
+		KetQuaHocTap kqht = new KetQuaHocTap();
+		kqht.setMahocsinh(Integer.parseInt( mhs.getText()));
+		kqht.setMalop(malop.getSelectedItem().toString());
+		kqht.setHoten(txthoten.getText());
+		kqht.setHanhkiem(hanhkiem.getSelectedItem().toString());
+		kqht.setHocluc(hocluc.getSelectedItem().toString());
+		kqht.setDiemtrungbinh(txtgpa.getText());
+		kqht.setXeploai(txtxeploai.getText());
+		kqht.setTennienkhoa(nienkhoa.getSelectedItem().toString());
 		
-		lopdao = new LopHocDao();
-		lopdao.updateUser(hs);
+		kthtdao = new KetQuaHocTapDao();
+		kthtdao.updateUser(kqht);
 	}
 
-	private void addUser() {
-		Lop hs = new Lop();
-		hs.setMalop(malop.getSelectedItem().toString());
-		hs.setTenlop(txttenlop.getText());
-		hs.setGvchu_nghiem(txtgvch.getText());
-		hs.setMakhoa(makhoa.getSelectedItem().toString());
-		hs.setMakhoi(makhoi.getSelectedItem().toString());
-		hs.setTennienkhoa(nienkhoa.getSelectedItem().toString());
-		
-		lopdao = new LopHocDao();
-		lopdao.updateUser(hs);
-
-	}
+//	private void addUser() {
+//		Lop hs = new Lop();
+//		hs.setMalop(malop.getSelectedItem().toString());
+//		hs.setTenlop(txttenlop.getText());
+//		hs.setGvchu_nghiem(txtgvch.getText());
+//		hs.setMakhoa(makhoa.getSelectedItem().toString());
+//		hs.setMakhoi(makhoi.getSelectedItem().toString());
+//		hs.setTennienkhoa(nienkhoa.getSelectedItem().toString());
+//		
+//		lopdao = new LopHocDao();
+//		lopdao.updateUser(hs);
+//
+//	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {

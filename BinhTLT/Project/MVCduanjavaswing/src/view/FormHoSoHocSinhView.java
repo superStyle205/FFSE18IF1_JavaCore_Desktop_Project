@@ -26,10 +26,12 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import model.bean.GiaoVien;
 import model.bean.HoSoHocSinh;
 import model.bean.HocSinh;
 import model.dao.HoSoHocSinhDao;
 import model.dao.StudentDao;
+import model.dao.TeaCherDao;
 
 public class FormHoSoHocSinhView extends JFrame implements ActionListener, MouseListener {
 	private JTextField searchHS;
@@ -175,6 +177,10 @@ public class FormHoSoHocSinhView extends JFrame implements ActionListener, Mouse
 
 		return panel;
 	}
+	
+
+
+
 
 	public JPanel hosohocsinhLeft() {
 		JPanel panel = new JPanel();
@@ -276,10 +282,13 @@ public class FormHoSoHocSinhView extends JFrame implements ActionListener, Mouse
 
 		panel.setBackground(Color.WHITE);
 
+		
 		return panel;
 
 	}
+	
 
+	
 	public JSplitPane hosohocsinh() {
 		JSplitPane managerArea = new JSplitPane();
 
@@ -287,8 +296,11 @@ public class FormHoSoHocSinhView extends JFrame implements ActionListener, Mouse
 		managerArea.setRightComponent(hosohocsinhRight());
 		managerArea.setDividerLocation(400);
 
+		loadgram();
 		return managerArea;
 	}
+	
+
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -304,6 +316,10 @@ public class FormHoSoHocSinhView extends JFrame implements ActionListener, Mouse
 		txtghichu.setText((String) tableHS.getValueAt(rowSelected, 8));
 
 	}
+
+	
+
+	
 
 	private void clear() {
 		malop.setSelectedItem("");
@@ -377,20 +393,18 @@ public class FormHoSoHocSinhView extends JFrame implements ActionListener, Mouse
 				studentinfor.getHotenme(), studentinfor.getGhichu() });
 	}
 	
-	
 	public void loadgram() {
-//		model.setRowCount(0);
-//		StudentDao studentDao = new StudentDao();
-//
-//		ArrayList<HocSinh> listHS = studentDao.getAllUser();
-//		for (HocSinh hs : listHS) {
-//			model.addRow(new String[] { "" + hs.getMahocsinh(), hs.getHoten(), hs.getEmail(), hs.getDiachi(),
-//					hs.getMalop(), hs.getNamsinh(), hs.getNamhoc(), hs.getGioitinh() });
-//		}
+		tablemodel.setRowCount(0);
+		TeaCherDao giaovienDao = new TeaCherDao();
 
+		ArrayList<GiaoVien> listGV = giaovienDao.getAllUser();
+		for (GiaoVien gv : listGV) {
+			tablemodel.addRow(new String[] { "" + gv.getMagiaovien(), gv.getHoten(), gv.getGioitinh(), gv.getMalop(),
+					gv.getNamsinh(),gv.getMamon() });
+		}
 	}
 
-
+	
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub

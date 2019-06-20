@@ -182,6 +182,7 @@ public class FormQuanLiMonHoc extends JFrame implements ActionListener, MouseLis
 		btnAdd.setPreferredSize(btnUpdate.getPreferredSize());
 		btnDelete.setPreferredSize(btnUpdate.getPreferredSize());
 		btnClean.setPreferredSize(btnUpdate.getPreferredSize());
+		btnClean.addActionListener(this);
 		btnExit.setPreferredSize(btnUpdate.getPreferredSize());
 
 		pnMain.add(pnButton);
