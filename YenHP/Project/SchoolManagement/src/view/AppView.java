@@ -1,4 +1,4 @@
-package view;
+﻿package view;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -1706,7 +1706,13 @@ public class AppView extends JFrame implements ActionListener {
 				if (idDiemAndMon == true) {
 					JOptionPane.showMessageDialog(null, "Điểm Của Môn Này Đã Tồn Tại");
 				} else {
+					checkFixDiem();
+					boolean checkFixDiemHS = checkFixDiem();
+					if(checkFixDiemHS == true) {
+						JOptionPane.showMessageDialog(null, "Điểm không được lớn hơn 10 hoặc nhỏ hơn 0");
+					}else {
 					addDiem();
+					}
 				}
 			}
 			loadDataforTableDiem();
@@ -2329,6 +2335,26 @@ public class AppView extends JFrame implements ActionListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+	}
+	
+	// hàm này dùng để ràng buộc điểm không được âm và không quá 10
+	private boolean  checkFixDiem() {
+		boolean fixDiem = false;
+		if(Float.parseFloat(txtDiem15p1.getText()) < 0 || Float.parseFloat(txtDiem15p1.getText()) > 10) {
+			fixDiem = true;
+		}
+		if(Float.parseFloat(txtDiem15p2.getText()) < 0.0 || Float.parseFloat(txtDiem15p2.getText()) > 10.0) {
+			
+		}
+		if(Float.parseFloat(txtDiem1T.getText()) < 0.0 || Float.parseFloat(txtDiem1T.getText()) > 10.0) {
+			
+		}
+		if(Float.parseFloat(txtDiemKi1.getText()) < 0.0 || Float.parseFloat(txtDiemKi1.getText()) > 10.0) {
+			
+		}
+		if(Float.parseFloat(txtDiemKi2.getText()) < 0.0 || Float.parseFloat(txtDiem15p1.getText()) > 10.0) {
+			
+		}
+		return fixDiem;
 	}
 }
