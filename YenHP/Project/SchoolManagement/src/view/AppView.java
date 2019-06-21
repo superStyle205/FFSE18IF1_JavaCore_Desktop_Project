@@ -125,7 +125,6 @@ public class AppView extends JFrame implements ActionListener {
 	private JLabel lblTenLop_Diem;
 	private JTextField txtTenLop_Diem;
 	private JLabel lblMaMon_Diem;
-	private JTextField txtMaMon_Diem;
 	private JLabel lblTenMon_Diem;
 	private JTextField txtTenMon_Diem;
 	private JTextField txtMaLopHoc;
@@ -193,6 +192,8 @@ public class AppView extends JFrame implements ActionListener {
 	private JTextField txtSearchGV;
 	private JButton btnSearchGV;
 	private JLabel lblSearchGV;
+	private JComboBox<String> jcomboBoxDiem;
+	private DefaultComboBoxModel<String> comboxDiem;
 
 	/**
 	 * Launch the application.
@@ -436,7 +437,6 @@ public class AppView extends JFrame implements ActionListener {
 		txtTenLop.setEnabled(false);
 
 		boxmodelHS = new DefaultComboBoxModel<String>();
-		boxmodelHS.addElement("");
 
 		comboBoxHS = new JComboBox<String>(boxmodelHS);
 		comboBoxHS.addKeyListener(new KeyAdapter() {
@@ -468,12 +468,14 @@ public class AppView extends JFrame implements ActionListener {
 		panelChNangHS.add(btnSuaHS);
 		Icon iconSuaHS = new ImageIcon("technics.png");
 		btnSuaHS.setIcon(iconSuaHS);
+		btnSuaHS.setEnabled(false);
 
 		btnXoaHS = new JButton("Xóa");
 		btnXoaHS.setBounds(79, 139, 111, 28);
 		panelChNangHS.add(btnXoaHS);
 		Icon iconXoaHS = new ImageIcon("cancel.png");
 		btnXoaHS.setIcon(iconXoaHS);
+		btnXoaHS.setEnabled(false);
 
 		btnLamMoiHS = new JButton("Làm Mới");
 		btnLamMoiHS.setBounds(79, 188, 111, 29);
@@ -600,6 +602,8 @@ public class AppView extends JFrame implements ActionListener {
 				txtGhChuHS.setText((String) jtableHS.getValueAt(rowSelectedHS, 12));
 
 				btnThemHS.setEnabled(false);
+				btnSuaHS.setEnabled(true);
+				btnXoaHS.setEnabled(true);
 			}
 		});
 		;
@@ -791,12 +795,14 @@ public class AppView extends JFrame implements ActionListener {
 		panelChNangGV.add(btnSuaGV);
 		Icon iconSuaGV = new ImageIcon("technics.png");
 		btnSuaGV.setIcon(iconSuaGV);
+		btnSuaGV.setEnabled(false);
 
 		btnXoaGV = new JButton("Xóa");
 		btnXoaGV.setBounds(79, 95, 111, 28);
 		panelChNangGV.add(btnXoaGV);
 		Icon iconXoaGV = new ImageIcon("cancel.png");
 		btnXoaGV.setIcon(iconXoaGV);
+		btnXoaGV.setEnabled(false);
 
 		btnLamMoiGV = new JButton("Làm Mới");
 		btnLamMoiGV.setBounds(79, 134, 111, 29);
@@ -909,6 +915,8 @@ public class AppView extends JFrame implements ActionListener {
 				txtGhChuGV.setText((String) jtableGV.getValueAt(rowSelectedGV, 8));
 
 				btnThemGV.setEnabled(false);
+				btnSuaGV.setEnabled(true);
+				btnXoaGV.setEnabled(true);
 			}
 		});
 		scrollPaneGV = new JScrollPane(jtableGV);
@@ -1011,10 +1019,12 @@ public class AppView extends JFrame implements ActionListener {
 		btnSuaLop = new JButton("Sửa");
 		btnSuaLop.setBounds(217, 35, 111, 29);
 		panelCNangLop.add(btnSuaLop);
+		btnSuaLop.setEnabled(false);
 
 		btnXoaLop = new JButton("Xóa");
 		btnXoaLop.setBounds(359, 35, 111, 28);
 		panelCNangLop.add(btnXoaLop);
+		btnXoaLop.setEnabled(false);
 
 		btnLamMoiLop = new JButton("Làm Mới");
 		btnLamMoiLop.setBounds(496, 35, 111, 29);
@@ -1083,6 +1093,8 @@ public class AppView extends JFrame implements ActionListener {
 
 				txtMaLopHoc.setEnabled(false);
 				btnThemLop.setEnabled(false);
+				btnSuaLop.setEnabled(true);
+				btnXoaLop.setEnabled(true);
 			}
 		});
 		scrollLop = new JScrollPane(jtableLop);
@@ -1165,16 +1177,12 @@ public class AppView extends JFrame implements ActionListener {
 		lblMaMon_Diem.setBounds(892, 39, 58, 14);
 		panelTTinBangDiem.add(lblMaMon_Diem);
 
-		txtMaMon_Diem = new JTextField();
-		txtMaMon_Diem.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				removeCheckDiem();
-			}
-		});
-		txtMaMon_Diem.setBounds(960, 36, 106, 20);
-		panelTTinBangDiem.add(txtMaMon_Diem);
-		txtMaMon_Diem.setColumns(10);
+		comboxDiem = new DefaultComboBoxModel<>();
+
+		jcomboBoxDiem = new JComboBox<String>(comboxDiem);
+		jcomboBoxDiem.setBounds(960, 36, 106, 20);
+		panelTTinBangDiem.add(jcomboBoxDiem);
+		getIdMon();
 
 		lblTenMon_Diem = new JLabel("Tên Môn");
 		lblTenMon_Diem.setBounds(1095, 39, 58, 14);
@@ -1257,10 +1265,12 @@ public class AppView extends JFrame implements ActionListener {
 		btnSuaDiem = new JButton("Sửa");
 		btnSuaDiem.setBounds(217, 35, 111, 29);
 		panelChNangDiem.add(btnSuaDiem);
+		btnSuaDiem.setEnabled(false);
 
 		btnXoaDiem = new JButton("Xóa");
 		btnXoaDiem.setBounds(359, 35, 111, 28);
 		panelChNangDiem.add(btnXoaDiem);
+		btnXoaDiem.setEnabled(false);
 
 		btnLamMoiDiem = new JButton("Làm Mới");
 		btnLamMoiDiem.setBounds(496, 35, 111, 29);
@@ -1277,6 +1287,7 @@ public class AppView extends JFrame implements ActionListener {
 		lblFixDiem2.setForeground(Color.RED);
 		lblFixDiem2.setBounds(960, 64, 135, 14);
 		panelTTinBangDiem.add(lblFixDiem2);
+		lblFixDiem2.setVisible(false);
 
 		// các label dùng để đưa ra ghi chú
 		JLabel lblLuuYDiem1 = new JLabel("*");
@@ -1308,7 +1319,6 @@ public class AppView extends JFrame implements ActionListener {
 		lblLuuYDiem5.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblLuuYDiem5.setBounds(1276, 94, 23, 14);
 		panelTTinBangDiem.add(lblLuuYDiem5);
-		lblFixDiem2.setVisible(false);
 
 		JLabel lblLuuYDiem6 = new JLabel("* Các ô này không cần nhập. Phần mền sẽ hỗ trợ bạn phần này.");
 		lblLuuYDiem6.setForeground(Color.RED);
@@ -1339,7 +1349,7 @@ public class AppView extends JFrame implements ActionListener {
 				txtTenHocSinh_Diem.setText((String) jtableDiem.getValueAt(rowSelectedLop, 1));
 				txtMaLop_Diem.setText((String) jtableDiem.getValueAt(rowSelectedLop, 2));
 				txtTenLop_Diem.setText((String) jtableDiem.getValueAt(rowSelectedLop, 3));
-				txtMaMon_Diem.setText((String) jtableDiem.getValueAt(rowSelectedLop, 4));
+				jcomboBoxDiem.setSelectedItem((String) jtableDiem.getValueAt(rowSelectedLop, 4));
 				txtTenMon_Diem.setText((String) jtableDiem.getValueAt(rowSelectedLop, 5));
 				txtDiem15p1.setText((String) jtableDiem.getValueAt(rowSelectedLop, 6));
 				txtDiem15p2.setText((String) jtableDiem.getValueAt(rowSelectedLop, 7));
@@ -1350,6 +1360,8 @@ public class AppView extends JFrame implements ActionListener {
 
 				txtMaHocSinh_Diem.setEnabled(false);
 				btnThemDiem.setEnabled(false);
+				btnSuaDiem.setEnabled(true);
+				btnXoaDiem.setEnabled(true);
 			}
 		});
 		scrollDiem = new JScrollPane(jtableDiem);
@@ -1451,10 +1463,12 @@ public class AppView extends JFrame implements ActionListener {
 		btnSuaMon = new JButton("Sửa");
 		btnSuaMon.setBounds(217, 35, 111, 29);
 		panelCNangMon.add(btnSuaMon);
+		btnSuaMon.setEnabled(false);
 
 		btnXoaMon = new JButton("Xóa");
 		btnXoaMon.setBounds(359, 35, 111, 28);
 		panelCNangMon.add(btnXoaMon);
+		btnXoaMon.setEnabled(false);
 
 		btnLamMoiMon = new JButton("Làm Mới");
 		btnLamMoiMon.setBounds(496, 35, 111, 29);
@@ -1525,6 +1539,8 @@ public class AppView extends JFrame implements ActionListener {
 
 				txtMaMon_Mon.setEnabled(false);
 				btnThemMon.setEnabled(false);
+				btnSuaMon.setEnabled(true);
+				btnXoaMon.setEnabled(true);
 			}
 		});
 		scrollMon = new JScrollPane(jtableMon);
@@ -1686,6 +1702,8 @@ public class AppView extends JFrame implements ActionListener {
 			}
 		} else if (action == btnSuaLop) {
 			updateClassStudent();
+			comboBoxHS.removeAllItems();
+			getIdLop();
 			loadDataforTableLop();
 		} else if (action == btnXoaLop) {
 			deleteClassStudent();
@@ -1703,11 +1721,11 @@ public class AppView extends JFrame implements ActionListener {
 				} else {
 					checkFixDiem();
 					boolean checkFixDiemHS = checkFixDiem();
-					if(checkFixDiemHS == true) {
+					if (checkFixDiemHS == true) {
 						JOptionPane.showMessageDialog(null, "Điểm không được lớn hơn 10 hoặc nhỏ hơn 0");
-					}else {
-					addDiem();
-					loadDataforTableDiem();
+					} else {
+						addDiem();
+						loadDataforTableDiem();
 					}
 				}
 			}
@@ -1727,14 +1745,20 @@ public class AppView extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Môn Này Đã Tồn Tại");
 				} else {
 					addMon();
+					jcomboBoxDiem.removeAllItems();
+					getIdMon();
 					loadDataforTableMon();
 				}
 			}
 		} else if (action == btnSuaMon) {
 			updateMon();
+			jcomboBoxDiem.removeAllItems();
+			getIdMon();
 			loadDataforTableMon();
 		} else if (action == btnXoaMon) {
 			deleteMon();
+			jcomboBoxDiem.removeAllItems();
+			getIdMon();
 			loadDataforTableMon();
 		} else {
 			cleanMon();
@@ -1805,7 +1829,7 @@ public class AppView extends JFrame implements ActionListener {
 		diem.setTenHocSinh_Diem(txtTenHocSinh_Diem.getText());
 		diem.setMaLop(txtMaLop_Diem.getText());
 		diem.setTenLop_Diem(txtTenLop_Diem.getText());
-		diem.setMaMon(txtMaMon_Diem.getText());
+		diem.setMaMon(jcomboBoxDiem.getSelectedItem().toString());
 		diem.setTenMon_Diem(txtTenMon_Diem.getText());
 		diem.setDiem15P1(Float.parseFloat(txtDiem15p1.getText()));
 		diem.setDiem15P2(Float.parseFloat(txtDiem15p2.getText()));
@@ -1904,7 +1928,7 @@ public class AppView extends JFrame implements ActionListener {
 		diem.setTenHocSinh_Diem(txtTenHocSinh_Diem.getText());
 		diem.setMaLop(txtMaLop_Diem.getText());
 		diem.setTenLop_Diem(txtTenLop_Diem.getText());
-		diem.setMaMon(txtMaMon_Diem.getText());
+		diem.setMaMon(jcomboBoxDiem.getSelectedItem().toString());
 		diem.setTenMon_Diem(txtTenMon_Diem.getText());
 		diem.setDiem15P1(Float.parseFloat(txtDiem15p1.getText()));
 		diem.setDiem15P2(Float.parseFloat(txtDiem15p2.getText()));
@@ -2001,6 +2025,8 @@ public class AppView extends JFrame implements ActionListener {
 		}
 
 		btnThemHS.setEnabled(true);
+		btnSuaHS.setEnabled(false);
+		btnXoaHS.setEnabled(false);
 	}
 
 	public void cleanTeacher() {
@@ -2035,6 +2061,8 @@ public class AppView extends JFrame implements ActionListener {
 		}
 
 		btnThemGV.setEnabled(true);
+		btnSuaGV.setEnabled(false);
+		btnXoaGV.setEnabled(false);
 	}
 
 	private void cleanLop() {
@@ -2055,6 +2083,8 @@ public class AppView extends JFrame implements ActionListener {
 
 		txtMaLopHoc.setEnabled(true);
 		btnThemLop.setEnabled(true);
+		btnSuaLop.setEnabled(false);
+		btnXoaLop.setEnabled(false);
 	}
 
 	private void cleanDiem() {
@@ -2063,7 +2093,7 @@ public class AppView extends JFrame implements ActionListener {
 		txtTenHocSinh_Diem.setText("");
 		txtMaLop_Diem.setText("");
 		txtTenLop_Diem.setText("");
-		txtMaMon_Diem.setText("");
+		jcomboBoxDiem.setSelectedItem("");
 		txtTenMon_Diem.setText("");
 		txtDiem15p1.setText("");
 		txtDiem15p2.setText("");
@@ -2075,12 +2105,14 @@ public class AppView extends JFrame implements ActionListener {
 		if (txtMaHocSinh_Diem.getText().length() == 0) {
 			lblFixDiem1.setVisible(false);
 		}
-		if (txtMaMon_Diem.getText().length() == 0) {
+		if (jcomboBoxDiem.getSelectedItem().toString().length() < 1) {
 			lblFixDiem2.setVisible(false);
 		}
 
 		btnThemDiem.setEnabled(true);
 		txtMaHocSinh_Diem.setEnabled(true);
+		btnSuaDiem.setEnabled(false);
+		btnXoaDiem.setEnabled(false);
 	}
 
 	private void cleanMon() {
@@ -2102,6 +2134,8 @@ public class AppView extends JFrame implements ActionListener {
 
 		txtMaMon_Mon.setEnabled(true);
 		btnThemMon.setEnabled(true);
+		btnSuaMon.setEnabled(false);
+		btnXoaMon.setEnabled(false);
 	}
 
 	// các hàm checkvalue dùng để ràng buộc 1 số ô phải có dữ liệu
@@ -2179,7 +2213,7 @@ public class AppView extends JFrame implements ActionListener {
 			lblFixDiem1.setVisible(true);
 			flagDiem = false;
 		}
-		if (txtMaMon_Diem.getText().length() == 0) {
+		if (jcomboBoxDiem.getSelectedItem().toString().length() == 0) {
 			lblFixDiem2.setVisible(true);
 		}
 		return flagDiem;
@@ -2220,7 +2254,7 @@ public class AppView extends JFrame implements ActionListener {
 		boolean checkDiemAndMon = false;
 		for (Diem diem : litsDiem) {
 			if (txtMaHocSinh_Diem.getText().toString().equals(Integer.toString(diem.getMaHoSinh())) == true
-					&& txtMaMon_Diem.getText().toString().equals(diem.getMaMon().toString()) == true) {
+					&& jcomboBoxDiem.getSelectedItem().toString().equals(diem.getMaMon().toString()) == true) {
 				checkDiemAndMon = true;
 			}
 		}
@@ -2297,7 +2331,7 @@ public class AppView extends JFrame implements ActionListener {
 		if (txtMaHocSinh_Diem.getText().length() != 0) {
 			lblFixDiem1.setVisible(false);
 		}
-		if (txtMaMon_Diem.getText().length() != 0) {
+		if (jcomboBoxDiem.getSelectedItem().toString().length() > 1) {
 			lblFixDiem2.setVisible(false);
 		}
 	}
@@ -2337,24 +2371,48 @@ public class AppView extends JFrame implements ActionListener {
 			e.printStackTrace();
 		}
 	}
-	
+
+	// hàm này dùng để load id lớp mới nhập lên combobox
+	public void getIdMon() {
+
+		String sql = "SELECT * FROM monhoc";
+
+		ConnectUtil connectUtil = new ConnectUtil();
+		Connection conn = connectUtil.connect();
+
+		try {
+
+			PreparedStatement statement = conn.prepareStatement(sql);
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+
+				// Display comboBox set from databse
+				jcomboBoxDiem.addItem(result.getString("maMonHoc"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	// hàm này dùng để ràng buộc điểm không được âm và không quá 10
-	private boolean  checkFixDiem() {
+	private boolean checkFixDiem() {
 		boolean fixDiem = false;
-		if(Float.parseFloat(txtDiem15p1.getText()) < 0 || Float.parseFloat(txtDiem15p1.getText()) > 10) {
+		if (Float.parseFloat(txtDiem15p1.getText()) < 0.0 || Float.parseFloat(txtDiem15p1.getText()) > 10.0) {
 			fixDiem = true;
 		}
-		if(Float.parseFloat(txtDiem15p2.getText()) < 0.0 || Float.parseFloat(txtDiem15p2.getText()) > 10.0) {
-			
+		if (Float.parseFloat(txtDiem15p2.getText()) < 0.0 || Float.parseFloat(txtDiem15p2.getText()) > 10.0) {
+
 		}
-		if(Float.parseFloat(txtDiem1T.getText()) < 0.0 || Float.parseFloat(txtDiem1T.getText()) > 10.0) {
-			
+		if (Float.parseFloat(txtDiem1T.getText()) < 0.0 || Float.parseFloat(txtDiem1T.getText()) > 10.0) {
+
 		}
-		if(Float.parseFloat(txtDiemKi1.getText()) < 0.0 || Float.parseFloat(txtDiemKi1.getText()) > 10.0) {
-			
+		if (Float.parseFloat(txtDiemKi1.getText()) < 0.0 || Float.parseFloat(txtDiemKi1.getText()) > 10.0) {
+
 		}
-		if(Float.parseFloat(txtDiemKi2.getText()) < 0.0 || Float.parseFloat(txtDiem15p1.getText()) > 10.0) {
-			
+		if (Float.parseFloat(txtDiemKi2.getText()) < 0.0 || Float.parseFloat(txtDiem15p1.getText()) > 10.0) {
+
 		}
 		return fixDiem;
 	}
