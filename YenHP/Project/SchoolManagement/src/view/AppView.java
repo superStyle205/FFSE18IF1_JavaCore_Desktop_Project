@@ -1640,9 +1640,10 @@ public class AppView extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object action = e.getSource();
 		if (action == btnThemHS) {
-			checkValue();
-			addStudent();
-			loadDataforTableHS();
+			if (checkValue() == true) {
+				addStudent();
+				loadDataforTableHS();
+			}
 		} else if (action == btnSuaHS) {
 			updateStudent();
 			loadDataforTableHS();
@@ -1655,12 +1656,10 @@ public class AppView extends JFrame implements ActionListener {
 		} else if (action == btnSearchHS) {
 			loadSearchHS();
 		} else if (action == btnThemGV) {
-			checkValueGV();
-			boolean check = checkValueGV();
-			if (check == true) {
+			if (checkValueGV() == true) {
 				addTeacher();
+				loadDataforTableGV();
 			}
-			loadDataforTableGV();
 		} else if (action == btnSuaGV) {
 			updateTeacher();
 			loadDataforTableGV();
@@ -1673,20 +1672,18 @@ public class AppView extends JFrame implements ActionListener {
 		} else if (action == btnSearchGV) {
 			loadSearchGV();
 		} else if (action == btnThemLop) {
-			checkValueLop();
-			boolean checkLop = checkValueLop();
-			if (checkLop == true) {
+			if (checkValueLop() == true) {
 				checkIdLopAndIdGV();
 				boolean idLop = checkIdLopAndIdGV();
 				if (idLop == true) {
 					JOptionPane.showMessageDialog(null, "Id Không Được Trùng Hoặc Giáo Viên Không Được Trùng");
 				} else {
 					addClassStudent();
+					comboBoxHS.removeAllItems();
+					getIdLop();
+					loadDataforTableLop();
 				}
 			}
-			comboBoxHS.removeAllItems();
-			getIdLop();
-			loadDataforTableLop();
 		} else if (action == btnSuaLop) {
 			updateClassStudent();
 			loadDataforTableLop();
@@ -1701,9 +1698,7 @@ public class AppView extends JFrame implements ActionListener {
 			checkValueDiem();
 			boolean checkDiem = checkValueDiem();
 			if (checkDiem == true) {
-				checkIdDiemAndMon();
-				boolean idDiemAndMon = checkIdDiemAndMon();
-				if (idDiemAndMon == true) {
+				if (checkIdDiemAndMon() == true) {
 					JOptionPane.showMessageDialog(null, "Điểm Của Môn Này Đã Tồn Tại");
 				} else {
 					checkFixDiem();
@@ -1712,10 +1707,10 @@ public class AppView extends JFrame implements ActionListener {
 						JOptionPane.showMessageDialog(null, "Điểm không được lớn hơn 10 hoặc nhỏ hơn 0");
 					}else {
 					addDiem();
+					loadDataforTableDiem();
 					}
 				}
 			}
-			loadDataforTableDiem();
 		} else if (action == btnSuaDiem) {
 			updateDiem();
 			loadDataforTableDiem();
@@ -1725,18 +1720,16 @@ public class AppView extends JFrame implements ActionListener {
 		} else if (action == btnLamMoiDiem) {
 			cleanDiem();
 		} else if (action == btnThemMon) {
-			checkValueMon();
-			boolean checkMon = checkValueMon();
-			if (checkMon == true) {
+			if (checkValueMon() == true) {
 				checkIdMon();
 				boolean idMonAndGV = checkIdMon();
 				if (idMonAndGV == true) {
 					JOptionPane.showMessageDialog(null, "Môn Này Đã Tồn Tại");
 				} else {
 					addMon();
+					loadDataforTableMon();
 				}
 			}
-			loadDataforTableMon();
 		} else if (action == btnSuaMon) {
 			updateMon();
 			loadDataforTableMon();
@@ -2112,25 +2105,33 @@ public class AppView extends JFrame implements ActionListener {
 	}
 
 	// các hàm checkvalue dùng để ràng buộc 1 số ô phải có dữ liệu
-	public void checkValue() {
+	public boolean checkValue() {
+		boolean check = true;
 		if (txtHTenHS.getText().length() == 0) {
 			lblFixHS2.setVisible(true);
+			check = false;
 		}
 		if (txtNgSinh.getText().length() == 0) {
 			lblFixHS3.setVisible(true);
+			check = false;
 		}
 		if (group.getSelection() == null) {
 			lblFixHS4.setVisible(true);
+			check = false;
 		}
 		if (txtQuQuan.getText().length() == 0) {
 			lblFixHS5.setVisible(true);
+			check = false;
 		}
 		if (comboBoxHS.getSelectedItem().toString().length() < 1) {
 			lblFixHS6.setVisible(true);
+			check = false;
 		}
 		if (txtDiaChi.getText().length() == 0) {
 			lblFixHS8.setVisible(true);
+			check = false;
 		}
+		return check;
 	}
 
 	public boolean checkValueGV() {
