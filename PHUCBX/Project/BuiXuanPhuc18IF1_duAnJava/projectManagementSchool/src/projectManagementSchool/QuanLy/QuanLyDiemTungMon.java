@@ -28,30 +28,28 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import projectManagementSchool.UserDao.userDaoQuanDLyDiemTungMon;
+import projectManagementSchool.UserDao.userDaoQuanLyLuong;
 import projectManagementSchool.model.Khoi;
 import projectManagementSchool.model.Lop;
 import projectManagementSchool.model.MonHoc;
 import projectManagementSchool.model.diemTungMon;
 import projectManagementSchool.model.hocKi;
+import projectManagementSchool.model.salary;
 
 public class QuanLyDiemTungMon extends JFrame implements ActionListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 	private JLabel lbCapNhatDiem;
-	private JLabel lbChonKhoi, lbChonLop, lbChonMon, lbChonHocKi;
 	private JLabel lblId, lblMaLop, lblMaMon, lblMaHocKi, lblMaHocSinh, lblTenHocSinh, lblMieng, lblGhiChu, lbl15pLan1,
-			lbl15pLan2, lbl45p, lblDiemHocKi;
+			lbl15pLan2, lbl45p, lblDiemHocKi, lblDiemTrungBinh;
 	private JTextField txtId, txtMaLop, txtMaMon, txtMaHocKi, txtMaHocSinh, txtTenHocSinh, txtMiengLan1, txtGhiChu,
-			txt15pLan1, txt15pLan2, txt45p, txtDiemHocKi;
-	private JButton btnAdd, btnUpdate, btnDelete, btnClean;
-	private JComboBox<MonHoc> cbChonMon;
-	private JComboBox<Khoi> cbChonKhoi;
-	private JComboBox<Lop> cbChonLop;
-	private JComboBox<hocKi> cbChonHocKi;
+			txt15pLan1, txt15pLan2, txt45p, txtDiemHocKi, txtTimKiem, txtDiemTrungBinh;
+	private JButton btnAdd, btnUpdate, btnDelete, btnClean, btnTimKiem, btnThoat;
 	private DefaultTableModel table;
 	private JScrollPane sc;
 	private JTable tab;
 	private userDaoQuanDLyDiemTungMon userDao;
+
 	public QuanLyDiemTungMon(String title) {
 		super(title);
 		addControls();
@@ -71,6 +69,17 @@ public class QuanLyDiemTungMon extends JFrame implements ActionListener, MouseLi
 		pnCapNhatDiem.add(lbCapNhatDiem);
 		pnMain.add(pnCapNhatDiem);
 
+		JPanel pnTimKiem = new JPanel();
+		pnTimKiem.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		txtTimKiem = new JTextField(15);
+		btnTimKiem = new JButton("Tìm Kiếm");
+		btnThoat = new JButton("Thoát");
+		pnTimKiem.add(txtTimKiem);
+		pnTimKiem.add(btnTimKiem);
+		pnTimKiem.add(btnThoat);
+
+		pnMain.add(pnTimKiem);
+
 		JPanel pnbtnNhapDiem = new JPanel();
 		pnbtnNhapDiem.setLayout(new GridLayout(3, 4));
 
@@ -87,7 +96,7 @@ public class QuanLyDiemTungMon extends JFrame implements ActionListener, MouseLi
 		pnId.add(lblId);
 		pnId.add(txtId);
 //		pnbtnNhapDiem.add(pnMaLop);
-		
+
 		JPanel pnMaLop = new JPanel();
 		lblMaLop = new JLabel("Mã Lớp:");
 		txtMaLop = new JTextField(10);
@@ -158,6 +167,8 @@ public class QuanLyDiemTungMon extends JFrame implements ActionListener, MouseLi
 		pnDiemHocKi.add(txtDiemHocKi);
 		pnbtnNhapDiem.add(pnDiemHocKi);
 
+		txtDiemTrungBinh = new JTextField(10);
+
 		JPanel pnGhiChu = new JPanel();
 		lblGhiChu = new JLabel("Ghi chú: ");
 		txtGhiChu = new JTextField(10);
@@ -207,6 +218,7 @@ public class QuanLyDiemTungMon extends JFrame implements ActionListener, MouseLi
 		btnUpdate.addActionListener(this);
 		btnDelete.addActionListener(this);
 		btnClean.addActionListener(this);
+		btnTimKiem.addActionListener(this);
 
 		pnMain.add(pnButton);
 
@@ -233,6 +245,7 @@ public class QuanLyDiemTungMon extends JFrame implements ActionListener, MouseLi
 		table.addColumn("15p lần 2");
 		table.addColumn("1 tiết ");
 		table.addColumn("Điểm Học Kì");
+		table.addColumn("Điểm Trung Bình");
 		table.addColumn("Ghi Chú");
 
 		tab = new JTable(table);
@@ -262,17 +275,10 @@ public class QuanLyDiemTungMon extends JFrame implements ActionListener, MouseLi
 		// duyet danh sach user lay tu database va them vao table
 		for (diemTungMon dtm : listUser) {
 			table.addRow(new String[] { "" + dtm.getId(), dtm.getMaLop(), dtm.getMaMon(), dtm.getMaHocKi(),
-					dtm.getMaHocSinh(), dtm.getTenHocSinh(), dtm.getMieng(), dtm.getDiem15pLan1(), dtm.getDiem15pLan2(),
-					dtm.getDiem1Tiet(), dtm.getDiemHocKi(), dtm.getGhiChu() });
+					dtm.getMaHocSinh(), dtm.getTenHocSinh(), "" + dtm.getMieng(), "" + dtm.getDiem15pLan1(),
+					"" + dtm.getDiem15pLan2(), "" + dtm.getDiem1Tiet(), "" + dtm.getDiemHocKi(),
+					"" + dtm.getDiemTrungBinh(), dtm.getGhiChu() });
 		}
-	}
-
-	public void showWindown() {
-		this.setSize(800, 600);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
-
 	}
 
 	private void clearInputInfoLop() {
@@ -304,11 +310,15 @@ public class QuanLyDiemTungMon extends JFrame implements ActionListener, MouseLi
 		dtm.setMaHocKi(txtMaHocKi.getText());
 		dtm.setMaHocSinh(txtMaHocSinh.getText());
 		dtm.setTenHocSinh(txtTenHocSinh.getText());
-		dtm.setMieng(txtMiengLan1.getText());
-		dtm.setDiem15pLan1(txt15pLan1.getText());
-		dtm.setDiem15pLan2(txt15pLan2.getText());
-		dtm.setDiem1Tiet(txt45p.getText());
-		dtm.setDiemHocKi(txtDiemHocKi.getText());
+		dtm.setMieng(Double.parseDouble(txtMiengLan1.getText()));
+		dtm.setDiem15pLan1(Double.parseDouble(txt15pLan1.getText()));
+		dtm.setDiem15pLan2(Double.parseDouble(txt15pLan2.getText()));
+		dtm.setDiem1Tiet(Double.parseDouble(txt45p.getText()));
+		dtm.setDiemHocKi(Double.parseDouble(txtDiemHocKi.getText()));
+		Double diemTrungBinh = (Double.parseDouble(txtMiengLan1.getText()) + Double.parseDouble(txt15pLan1.getText())
+				+ Double.parseDouble(txt15pLan2.getText()) + (Double.parseDouble(txt45p.getText()) * 2)
+				+ (Double.parseDouble(txtDiemHocKi.getText()) * 3)) / 8;
+		dtm.setDiemTrungBinh(diemTrungBinh);
 		dtm.setGhiChu(txtGhiChu.getText());
 
 		userDao.updateUser(dtm);
@@ -323,14 +333,29 @@ public class QuanLyDiemTungMon extends JFrame implements ActionListener, MouseLi
 		dtm.setMaHocKi(txtMaHocKi.getText());
 		dtm.setMaHocSinh(txtMaHocSinh.getText());
 		dtm.setTenHocSinh(txtTenHocSinh.getText());
-		dtm.setMieng(txtMiengLan1.getText());
-		dtm.setDiem15pLan1(txt15pLan1.getText());
-		dtm.setDiem15pLan2(txt15pLan2.getText());
-		dtm.setDiem1Tiet(txt45p.getText());
-		dtm.setDiemHocKi(txtDiemHocKi.getText());
+		dtm.setMieng(Double.parseDouble(txtMiengLan1.getText()));
+		dtm.setDiem15pLan1(Double.parseDouble(txt15pLan1.getText()));
+		dtm.setDiem15pLan2(Double.parseDouble(txt15pLan2.getText()));
+		dtm.setDiem1Tiet(Double.parseDouble(txt45p.getText()));
+		dtm.setDiemHocKi(Double.parseDouble(txtDiemHocKi.getText()));
+		dtm.setDiemTrungBinh(dtm.getDiemTrungBinh());
 		dtm.setGhiChu(txtGhiChu.getText());
 
 		userDao.addUser(dtm);
+	}
+
+	private void search() {
+		table.setRowCount(0);
+		String magiaovien = txtTimKiem.getText();
+
+		userDaoQuanDLyDiemTungMon userDao = new userDaoQuanDLyDiemTungMon();
+		diemTungMon dtm = new diemTungMon();
+		dtm = userDao.search(magiaovien);
+
+		table.addRow(new String[] { "" + dtm.getId(), dtm.getMaLop(), dtm.getMaMon(), dtm.getMaHocKi(),
+				dtm.getMaHocSinh(), dtm.getTenHocSinh(), "" + dtm.getMieng(), "" + dtm.getDiem15pLan1(),
+				"" + dtm.getDiem15pLan2(), "" + dtm.getDiem1Tiet(), "" + dtm.getDiemHocKi(),
+				"" + dtm.getDiemTrungBinh(), dtm.getGhiChu() });
 	}
 
 	@Override
@@ -345,16 +370,17 @@ public class QuanLyDiemTungMon extends JFrame implements ActionListener, MouseLi
 		} else if (action == btnDelete) {
 			deleteUser();
 			loadDataforTableUser();
+		} else if (action == btnTimKiem) {
+			search();
 		} else {
 			clearInputInfoLop();
 		}
-
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int rowSelected = tab.getSelectedRow();
-		
+
 		txtId.setText((String) tab.getValueAt(rowSelected, 0));
 		txtMaLop.setText((String) tab.getValueAt(rowSelected, 1));
 		txtMaMon.setText((String) tab.getValueAt(rowSelected, 2));
@@ -366,7 +392,8 @@ public class QuanLyDiemTungMon extends JFrame implements ActionListener, MouseLi
 		txt15pLan2.setText((String) tab.getValueAt(rowSelected, 8));
 		txt45p.setText((String) tab.getValueAt(rowSelected, 9));
 		txtDiemHocKi.setText((String) tab.getValueAt(rowSelected, 10));
-		txtGhiChu.setText((String) tab.getValueAt(rowSelected, 11));
+		txtDiemTrungBinh.setText((String) tab.getValueAt(rowSelected, 11));
+		txtGhiChu.setText((String) tab.getValueAt(rowSelected, 12));
 	}
 
 	@Override

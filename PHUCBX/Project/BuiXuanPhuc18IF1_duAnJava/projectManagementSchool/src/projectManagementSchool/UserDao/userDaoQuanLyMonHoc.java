@@ -104,5 +104,39 @@ public class userDaoQuanLyMonHoc {
 			connectUtil.disconnect(conn);
 		}
 	}
+	
+	public MonHoc search(String tenMonHoc){
+		MonHoc mh = null;
+		String sql = "SELECT * FROM monhoc WHERE tenMonHoc = ?";
+
+		ConnectUtil connectUtil = new ConnectUtil();
+		Connection conn = connectUtil.getConnect("localhost", "quanly", "root", "");
+
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+
+			statement.setString(1, tenMonHoc);
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+				mh = new MonHoc();
+				
+				mh.setId(result.getString("id"));
+				mh.setMaMonHoc(result.getString("maMonHoc"));
+				mh.setTenMonHoc(result.getString("tenMonHoc"));
+				mh.setMaNhanVien(result.getString("maNhanVien"));
+				mh.setSoTietDay(result.getString("soTiet"));
+				mh.setGhiChu(result.getString("ghiChu"));
+				
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+		} finally {
+			connectUtil.disconnect(conn);
+		}
+		return mh;
+	}
 
 }

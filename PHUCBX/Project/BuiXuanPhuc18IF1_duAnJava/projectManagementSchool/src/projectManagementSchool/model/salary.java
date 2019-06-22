@@ -60,7 +60,8 @@ public class salary {
 	}
 
 	public int getTienLuong() {
-		return (getNgayLamViec() * 180000);
+		int tienLuong = (getNgayLamViec() * 180000);
+		return tienLuong;
 	}
 
 	public void setTienLuong(int tienLuong) {
@@ -101,8 +102,8 @@ public class salary {
 
 	public int getTongLuong() {
 		int tongLuong = (getTienLuong() * getHeSoLuong()) + getPhuCap() + getTienThuong() - getLuongTamUng();
-				return tongLuong;
-			}
+		return tongLuong;
+	}
 
 	public void setTongLuong(int tongLuong) {
 		this.tongLuong = tongLuong;

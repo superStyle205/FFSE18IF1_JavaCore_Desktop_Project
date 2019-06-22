@@ -125,4 +125,46 @@ public class userDaoQuanLyHoSoHocSinh {
 			connectUtil.disconnect(conn);
 		}
 	}
+	
+	public hoSoHocSinh search(String tenHocSinh){
+		hoSoHocSinh hshs = null;
+		String sql = "SELECT * FROM hosohocsinh WHERE tenHocSinh = ?";
+
+		ConnectUtil connectUtil = new ConnectUtil();
+		Connection conn = connectUtil.getConnect("localhost", "quanly", "root", "");
+
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+
+			statement.setString(1, tenHocSinh);
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+				hshs = new hoSoHocSinh();
+
+				hshs.setId(result.getString("id"));
+				hshs.setMaLop(result.getString("maLop"));
+				hshs.setMaHocSinh(result.getString("maHocSinh"));
+				hshs.setTenHocSinh(result.getString("tenHocSinh"));
+				hshs.setGioiTinh(result.getString("gioiTinh"));
+				hshs.setNgaySinh(result.getString("ngaySinh"));
+				hshs.setNoiSinh(result.getString("noiSinh"));
+				hshs.setDiaChi(result.getString("diaChi"));
+				hshs.setEmail(result.getString("Email"));
+				hshs.setHoTenBo(result.getString("hoTenBo"));
+				hshs.setHoTenMe(result.getString("hoTenMe"));
+				hshs.setSoDienThoai(result.getString("SoDienThoai"));
+				hshs.setGhiChu(result.getString("ghiChu"));
+				
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+		} finally {
+			connectUtil.disconnect(conn);
+		}
+		return hshs;
+	}
+	
 }

@@ -24,10 +24,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-import projectManagementSchool.UserDao.userDaoQuanLyHocSinhTrongLop;
 import projectManagementSchool.UserDao.userDaoQuanLyMonHoc;
 import projectManagementSchool.model.MonHoc;
-import projectManagementSchool.model.hocSinhTrongLop;
 
 public class quanLyMonHoc extends JFrame implements ActionListener, MouseListener {
 
@@ -35,8 +33,10 @@ public class quanLyMonHoc extends JFrame implements ActionListener, MouseListene
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JLabel lblId,lblMaMon, lblTenMon, lblTenGiaoVienBoMon, lblMaGiaoVienBoMon, lblSoTiet, lblThongTinMon, lblGhiChu;
-	private JTextField txtId,txtMaMon, txtTenMon, txtTenGiaoVienBoMon, txtMaGiaoVienBoMon, txtSoTiet, txtTimKiem, txtGhiChu;
+	private JLabel lblId, lblMaMon, lblTenMon, lblMaGiaoVienBoMon, lblSoTiet, lblThongTinMon,
+			lblGhiChu;
+	private JTextField txtId, txtMaMon, txtTenMon, txtMaGiaoVienBoMon, txtSoTiet, txtTimKiem,
+			txtGhiChu;
 	private JButton btnTimKiem, btnThoat, btnAdd, btnUpdate, btnDelete, btnClean;
 	private DefaultTableModel table;
 	private JScrollPane sc;
@@ -89,7 +89,7 @@ public class quanLyMonHoc extends JFrame implements ActionListener, MouseListene
 		pnId.add(lblId);
 		pnId.add(txtId);
 //		pnChiTiet.add(pnId);
-		
+
 		JPanel pnMaMon = new JPanel();
 		lblMaMon = new JLabel("Mã Môn:");
 		txtMaMon = new JTextField(10);
@@ -149,11 +149,12 @@ public class quanLyMonHoc extends JFrame implements ActionListener, MouseListene
 		pnButton.add(btnDelete);
 		pnButton.add(btnClean);
 		pnMain.add(pnButton);
-		
+
 		btnAdd.addActionListener(this);
 		btnUpdate.addActionListener(this);
 		btnDelete.addActionListener(this);
 		btnClean.addActionListener(this);
+		btnTimKiem.addActionListener(this);
 
 		JPanel pnDanhSach = new JPanel();
 		pnDanhSach.setLayout(new BorderLayout());
@@ -196,8 +197,8 @@ public class quanLyMonHoc extends JFrame implements ActionListener, MouseListene
 
 		// duyet danh sach user lay tu database va them vao table
 		for (MonHoc mh : listUser) {
-			table.addRow(new String[] { "" + mh.getId(), mh.getMaMonHoc(), mh.getTenMonHoc(), mh.getMaNhanVien(), mh.getSoTietDay(),
-					mh.getGhiChu() });
+			table.addRow(new String[] { "" + mh.getId(), mh.getMaMonHoc(), mh.getTenMonHoc(), mh.getMaNhanVien(),
+					mh.getSoTietDay(), mh.getGhiChu() });
 		}
 	}
 
@@ -222,7 +223,7 @@ public class quanLyMonHoc extends JFrame implements ActionListener, MouseListene
 
 	private void updateUser() {
 		MonHoc mh = new MonHoc();
-		
+
 		mh.setId(txtId.getText());
 		mh.setMaMonHoc(txtMaMon.getText());
 		mh.setTenMonHoc(txtTenMon.getText());
@@ -245,6 +246,18 @@ public class quanLyMonHoc extends JFrame implements ActionListener, MouseListene
 		userDaoQuanLyMonHoc.addUser(mh);
 	}
 
+	private void search() {
+		table.setRowCount(0);
+		String magiaovien = txtTimKiem.getText();
+
+		userDaoQuanLyMonHoc userDao = new userDaoQuanLyMonHoc();
+		MonHoc mh = new MonHoc();
+		mh = userDao.search(magiaovien);
+
+		table.addRow(new String[] { "" + mh.getId(), mh.getMaMonHoc(), mh.getTenMonHoc(), mh.getMaNhanVien(),
+				mh.getSoTietDay(), mh.getGhiChu() });
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object action = e.getSource();
@@ -257,10 +270,11 @@ public class quanLyMonHoc extends JFrame implements ActionListener, MouseListene
 		} else if (action == btnDelete) {
 			deleteUser();
 			loadDataforTableUser();
+		} else if (action == btnTimKiem) {
+			search();
 		} else {
 			clearInputInfoLop();
 		}
-
 	}
 
 	@Override

@@ -27,17 +27,19 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import projectManagementSchool.UserDao.userDaoQuanLyLop;
+import projectManagementSchool.UserDao.userDaoQuanLyLuong;
 import projectManagementSchool.model.Khoi;
 import projectManagementSchool.model.Lop;
+import projectManagementSchool.model.salary;
 
 public class QuanLyKhoi extends JFrame implements ActionListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 
 	private JComboBox<Khoi> cboKhoi;
-	private JLabel lblId,lblTenLop, lblMaLop, lblGiaoVienChuNhiem, lbMaGiaoVien, lblNienKhoa, lblGhiChu, lblMaKhoi;
-	private JTextField txtId,txtTimKiem, txtTenLop, txtMaLop, txtGiaoVienChuNhiem, txtMaGiaoVien, txtNienKhoa, txtGhiChu,
-			txtMaKhoi;
+	private JLabel lblId, lblTenLop, lblMaLop, lblGiaoVienChuNhiem, lbMaGiaoVien, lblNienKhoa, lblGhiChu, lblMaKhoi;
+	private JTextField txtId, txtTimKiem, txtTenLop, txtMaLop, txtGiaoVienChuNhiem, txtMaGiaoVien, txtNienKhoa,
+			txtGhiChu, txtMaKhoi;
 	private JButton btnAdd, btnDelete, btnClean, btnUpdate, btnTimKiem, btnThoat;
 	private DefaultTableModel table;
 	private JScrollPane sc;
@@ -109,10 +111,10 @@ public class QuanLyKhoi extends JFrame implements ActionListener, MouseListener 
 		pnId.add(lblId);
 		pnId.add(txtId);
 //		pnChiTiet.add(pnId);
-		
+
 		JPanel pnMaKhoi = new JPanel();
 		lblMaKhoi = new JLabel("Mã Khối: ");
-		txtMaKhoi = new JTextField(12);
+		txtMaKhoi = new JTextField(15);
 		pnMaKhoi.add(lblMaKhoi);
 		pnMaKhoi.add(txtMaKhoi);
 		pnChiTiet.add(pnMaKhoi);
@@ -189,6 +191,7 @@ public class QuanLyKhoi extends JFrame implements ActionListener, MouseListener 
 		btnUpdate.addActionListener(this);
 		btnDelete.addActionListener(this);
 		btnClean.addActionListener(this);
+		btnTimKiem.addActionListener(this);
 
 		JPanel pnDanhSach = new JPanel();
 		pnDanhSach.setLayout(new BorderLayout());
@@ -233,8 +236,8 @@ public class QuanLyKhoi extends JFrame implements ActionListener, MouseListener 
 
 		// duyet danh sach user lay tu database va them vao table
 		for (Lop lop : listUser) {
-			table.addRow(new String[] { "" + lop.getId(), lop.getMaKhoi(), lop.getMaLop(), lop.getTenLop(), lop.getMaNhanVien(),
-					lop.getTenNhanVien(), lop.getNienKhoa(), lop.getGhiChu() });
+			table.addRow(new String[] { "" + lop.getId(), lop.getMaKhoi(), lop.getMaLop(), lop.getTenLop(),
+					lop.getMaNhanVien(), lop.getTenNhanVien(), lop.getNienKhoa(), lop.getGhiChu() });
 		}
 	}
 
@@ -247,7 +250,7 @@ public class QuanLyKhoi extends JFrame implements ActionListener, MouseListener 
 	}
 
 	private void clearInputInfoLop() {
-	
+
 		txtId.setText("");
 		txtMaKhoi.setText("");
 		txtMaLop.setText("");
@@ -292,6 +295,18 @@ public class QuanLyKhoi extends JFrame implements ActionListener, MouseListener 
 		userDao.addUser(lop);
 	}
 
+	private void search() {
+		table.setRowCount(0);
+		String tenLop = txtTimKiem.getText();
+
+		userDaoQuanLyLop userDao = new userDaoQuanLyLop();
+		Lop lop = new Lop();
+		lop = userDao.search(tenLop);
+
+		table.addRow(new String[] { "" + lop.getId(), lop.getMaKhoi(), lop.getMaLop(), lop.getTenLop(),
+				lop.getMaNhanVien(), lop.getTenNhanVien(), lop.getNienKhoa(), lop.getGhiChu() });
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object action = e.getSource();
@@ -304,10 +319,11 @@ public class QuanLyKhoi extends JFrame implements ActionListener, MouseListener 
 		} else if (action == btnDelete) {
 			deleteUser();
 			loadDataforTableUser();
+		} else if (action == btnTimKiem) {
+			search();
 		} else {
 			clearInputInfoLop();
 		}
-
 	}
 
 	@Override

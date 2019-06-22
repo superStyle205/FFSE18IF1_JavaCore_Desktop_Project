@@ -2,7 +2,6 @@ package projectManagementSchool.QuanLy;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -15,7 +14,6 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,17 +25,16 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import projectManagementSchool.UserDao.userDaoQuanLyHocSinhTrongLop;
-import projectManagementSchool.model.Khoi;
 import projectManagementSchool.model.hocSinhTrongLop;
 
 public class QuanLyLop extends JFrame implements ActionListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private JComboBox<Khoi> cboKhoi;
 	private JLabel lblId, lblMaLop, lblMaHocSinh, lblGioiTinh, lblTenHocSinh, lblTuoi, lblHanhKiem, lblGhiChu;
-	private JTextField txtId, txtMaLop, txtMaHocSinh, txtGioiTinh, txtTenHocSinh, txtTuoi, txtHanhKiem, txtGhiChu;
-	private JButton btnAdd, btnDelete, btnClean, btnUpdate;
+	private JTextField txtId, txtMaLop, txtMaHocSinh, txtGioiTinh, txtTenHocSinh, txtTuoi, txtHanhKiem, txtGhiChu,
+			txtTimKiem;
+	private JButton btnAdd, btnDelete, btnClean, btnUpdate, btnTimKiem, btnThoat;
 	private DefaultTableModel table;
 	private JScrollPane sc;
 	private JTable tab;
@@ -64,18 +61,16 @@ public class QuanLyLop extends JFrame implements ActionListener, MouseListener {
 		qlsv.add(lbqlsv);
 		pnMain.add(qlsv);
 
-//		JPanel pnKhoi = new JPanel();
-//		pnKhoi.setLayout(new FlowLayout(FlowLayout.CENTER));
-//		pnMain.add(pnKhoi);
-//		JLabel lblKhoi = new JLabel("Chọn Khối: ");
-//		cboKhoi = new JComboBox<Khoi>();
-//		cboKhoi.setPreferredSize(new Dimension(200, 25));
-//		pnKhoi.add(lblKhoi);
-//		pnKhoi.add(cboKhoi);
-
-//		JPanel pnLop = new JPanel();
-//		pnLop.setLayout(new FlowLayout(FlowLayout.CENTER));
-//		pnMain.add(pnKhoi);
+		JPanel pnTimKiem = new JPanel();
+		pnTimKiem.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		txtTimKiem = new JTextField(15);
+		btnTimKiem = new JButton("Tìm Kiếm");
+		btnThoat = new JButton("Thoát");
+		pnTimKiem.add(txtTimKiem);
+		pnTimKiem.add(btnTimKiem);
+		pnTimKiem.add(btnThoat);
+		
+		pnMain.add(pnTimKiem);
 
 		JPanel pnChiTiet = new JPanel();
 		pnChiTiet.setLayout(new GridLayout(2, 5));
@@ -156,8 +151,7 @@ public class QuanLyLop extends JFrame implements ActionListener, MouseListener {
 		lblMaLop.setPreferredSize(lblTuoi.getPreferredSize());
 		lblHanhKiem.setPreferredSize(lblMaHocSinh.getPreferredSize());
 		lblGhiChu.setPreferredSize(lblTenHocSinh.getPreferredSize());
-		
-			
+
 		JPanel pnButton = new JPanel();
 		pnButton.setLayout(new FlowLayout(FlowLayout.CENTER));
 
@@ -182,6 +176,7 @@ public class QuanLyLop extends JFrame implements ActionListener, MouseListener {
 		btnUpdate.addActionListener(this);
 		btnDelete.addActionListener(this);
 		btnClean.addActionListener(this);
+		btnTimKiem.addActionListener(this);
 
 		JPanel pnDanhSach = new JPanel();
 		pnDanhSach.setLayout(new BorderLayout());
@@ -218,7 +213,6 @@ public class QuanLyLop extends JFrame implements ActionListener, MouseListener {
 	}
 
 	private void loadDataforTableUser() {
-		// TODO Auto-generated method stub
 		// xoa du lieu cu
 		table.setRowCount(0);
 
@@ -232,8 +226,6 @@ public class QuanLyLop extends JFrame implements ActionListener, MouseListener {
 					hstl.getGioiTinh(), hstl.getNgaySinh(), hstl.getHanhKiem(), hstl.getGhiChu() });
 		}
 	}
-
-
 
 	public void showWindown() {
 		this.setSize(800, 600);
@@ -287,6 +279,18 @@ public class QuanLyLop extends JFrame implements ActionListener, MouseListener {
 		userDaoQuanLyHocSinhTrongLop.addUser(hstl);
 	}
 
+	private void search() {
+		table.setRowCount(0);
+		String magiaovien = txtTimKiem.getText();
+
+		userDaoQuanLyHocSinhTrongLop userDao = new userDaoQuanLyHocSinhTrongLop();
+		hocSinhTrongLop hstl = new hocSinhTrongLop();
+		hstl = userDao.search(magiaovien);
+
+		table.addRow(new String[] { "" + hstl.getId(), hstl.getMaLop(), hstl.getMaHocSinh(), hstl.getTenHocSinh(),
+				hstl.getGioiTinh(), hstl.getNgaySinh(), hstl.getHanhKiem(), hstl.getGhiChu() });
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object action = e.getSource();
@@ -299,10 +303,11 @@ public class QuanLyLop extends JFrame implements ActionListener, MouseListener {
 		} else if (action == btnDelete) {
 			deleteUser();
 			loadDataforTableUser();
+		} else if (action == btnTimKiem) {
+			search();
 		} else {
 			clearInputInfoLop();
 		}
-
 	}
 
 	@Override

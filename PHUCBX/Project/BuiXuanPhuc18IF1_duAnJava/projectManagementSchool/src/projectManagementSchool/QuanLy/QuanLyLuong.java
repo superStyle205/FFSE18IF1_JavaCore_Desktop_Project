@@ -34,8 +34,8 @@ public class QuanLyLuong extends JFrame implements ActionListener, MouseListener
 
 	private static final long serialVersionUID = 1L;
 
-	private JLabel  id, thongTinLuong, maGiaoVien, tenGiaoVien, thang, heSoLuong, phuCap, ngayLamViec,
-			luongTamUng, tienLuong, tienThuong, ghiChu;
+	private JLabel id, thongTinLuong, maGiaoVien, tenGiaoVien, thang, heSoLuong, phuCap, ngayLamViec, luongTamUng,
+			tienLuong, tienThuong, ghiChu;
 	private JTextField txtTongLuong, txtId, txtTimKiem, txtTenGiaoVien, txtThang, txtHeSoLuong, txtPhuCap,
 			txtNgayLamViec, txtLuongTamUng, txtTienLuong, txtTienThuong, txtGhiChu, txtMaGiaoVien;
 	private JButton btnTimKiem, btnThoat, btnAdd, btnUpdate, btnDelete, btnClean;
@@ -93,8 +93,6 @@ public class QuanLyLuong extends JFrame implements ActionListener, MouseListener
 		pnId.add(id);
 		pnId.add(txtId);
 
-		int TongLuong = luong.getTongLuong();
-
 		JPanel pnMaGiaoVien = new JPanel();
 		maGiaoVien = new JLabel("Mã Giáo Viên:");
 		txtMaGiaoVien = new JTextField(10);
@@ -149,7 +147,7 @@ public class QuanLyLuong extends JFrame implements ActionListener, MouseListener
 		txtTienLuong = new JTextField(10);
 		pnTienLuong.add(tienLuong);
 		pnTienLuong.add(txtTienLuong);
-		pnChiTiet.add(pnTienLuong);
+//		pnChiTiet.add(pnTienLuong);
 
 		JPanel pnTienThuong = new JPanel();
 		tienThuong = new JLabel("Tiền Thưởng:");
@@ -167,9 +165,9 @@ public class QuanLyLuong extends JFrame implements ActionListener, MouseListener
 
 		maGiaoVien.setPreferredSize(ngayLamViec.getPreferredSize());
 		tenGiaoVien.setPreferredSize(luongTamUng.getPreferredSize());
-		thang.setPreferredSize(tienLuong.getPreferredSize());
-		tienThuong.setPreferredSize(heSoLuong.getPreferredSize());
-		phuCap.setPreferredSize(ghiChu.getPreferredSize());
+		thang.setPreferredSize(tienThuong.getPreferredSize());
+//		tienThuong.setPreferredSize(heSoLuong.getPreferredSize());
+		ghiChu.setPreferredSize(heSoLuong.getPreferredSize());
 
 		pnMain.add(pnChiTiet);
 
@@ -197,6 +195,7 @@ public class QuanLyLuong extends JFrame implements ActionListener, MouseListener
 		btnUpdate.addActionListener(this);
 		btnDelete.addActionListener(this);
 		btnClean.addActionListener(this);
+		btnTimKiem.addActionListener(this);
 
 		JPanel pnDanhSach = new JPanel();
 		pnDanhSach.setLayout(new BorderLayout());
@@ -250,7 +249,7 @@ public class QuanLyLuong extends JFrame implements ActionListener, MouseListener
 		for (salary slr : listUser) {
 			table.addRow(new String[] { "" + slr.getId(), slr.getMaGiaoVien(), slr.getTenGiaoVien(),
 					"" + slr.getThang(), "" + slr.getHeSoLuong(), "" + slr.getPhuCap(), "" + slr.getNgayLamViec(),
-					"" + slr.getLuongTamUng(), "" + slr.getTienThuong(), "" + slr.getTienThuong(),
+					"" + slr.getLuongTamUng(), "" + slr.getTienLuong(), "" + slr.getTienThuong(),
 					"" + slr.getTongLuong(), slr.getGhiChu() });
 		}
 	}
@@ -272,9 +271,7 @@ public class QuanLyLuong extends JFrame implements ActionListener, MouseListener
 		txtPhuCap.setText("");
 		txtNgayLamViec.setText("");
 		txtLuongTamUng.setText("");
-		txtTienLuong.setText("");
 		txtTienThuong.setText("");
-		txtTongLuong.setText("");
 		txtGhiChu.setText("");
 	}
 
@@ -285,7 +282,7 @@ public class QuanLyLuong extends JFrame implements ActionListener, MouseListener
 
 	private void updateUser() {
 		salary slr = new salary();
-
+		
 		slr.setId(txtId.getText());
 		slr.setMaGiaoVien(txtMaGiaoVien.getText());
 		slr.setTenGiaoVien(txtTenGiaoVien.getText());
@@ -294,10 +291,15 @@ public class QuanLyLuong extends JFrame implements ActionListener, MouseListener
 		slr.setPhuCap(Integer.parseInt(txtPhuCap.getText()));
 		slr.setNgayLamViec(Integer.parseInt(txtNgayLamViec.getText()));
 		slr.setLuongTamUng(Integer.parseInt(txtLuongTamUng.getText()));
-		slr.setTienLuong(Integer.parseInt(txtTienLuong.getText()));
+		int tienLuong = (Integer.parseInt(txtNgayLamViec.getText()) * 180000);
+		slr.setTienLuong(tienLuong);
 		slr.setTienThuong(Integer.parseInt(txtTienThuong.getText()));
-//		slr.setTongLuong(luong.getTongLuong());
+		int tongLuong = (Integer.parseInt(txtTienLuong.getText()) * Integer.parseInt(txtHeSoLuong.getText()))
+				+ Integer.parseInt(txtPhuCap.getText()) + Integer.parseInt(txtTienThuong.getText())
+				- Integer.parseInt(txtLuongTamUng.getText());
+		slr.setTongLuong(tongLuong);
 		slr.setGhiChu(txtGhiChu.getText());
+		
 		userDao.updateUser(slr);
 	}
 
@@ -312,12 +314,25 @@ public class QuanLyLuong extends JFrame implements ActionListener, MouseListener
 		slr.setPhuCap(Integer.parseInt(txtPhuCap.getText()));
 		slr.setNgayLamViec(Integer.parseInt(txtNgayLamViec.getText()));
 		slr.setLuongTamUng(Integer.parseInt(txtLuongTamUng.getText()));
-		slr.setTienLuong(Integer.parseInt(txtTienLuong.getText()));
+		slr.setTienLuong(luong.getTienLuong());
 		slr.setTienThuong(Integer.parseInt(txtTienThuong.getText()));
 		slr.setTongLuong(luong.getTongLuong());
 		slr.setGhiChu(txtGhiChu.getText());
 
 		userDao.addUser(slr);
+	}
+
+	private void search() {
+		table.setRowCount(0);
+		String magiaovien = txtTimKiem.getText();
+
+		userDaoQuanLyLuong userDao = new userDaoQuanLyLuong();
+		salary slr = new salary();
+		slr = userDao.search(magiaovien);
+
+		table.addRow(new String[] { "" + slr.getId(), slr.getMaGiaoVien(), slr.getTenGiaoVien(), "" + slr.getThang(),
+				"" + slr.getHeSoLuong(), "" + slr.getPhuCap(), "" + slr.getNgayLamViec(), "" + slr.getLuongTamUng(),
+				"" + slr.getTienLuong(), "" + slr.getTienThuong(), "" + slr.getTongLuong(), "" + slr.getGhiChu() });
 	}
 
 	@Override
@@ -332,17 +347,17 @@ public class QuanLyLuong extends JFrame implements ActionListener, MouseListener
 		} else if (action == btnDelete) {
 			deleteUser();
 			loadDataforTableUser();
+		} else if (action == btnTimKiem) {
+			search();
 		} else {
 			clearInputInfoLop();
 		}
-
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int rowSelected = tab.getSelectedRow();
-		// idUser = Integer.parseInt((String) jTable.getValueAt(rowSelected, 0));
-//		txtId.setText((String) tab.getValueAt(rowSelected, 0));
+		txtId.setText((String) tab.getValueAt(rowSelected, 0));
 		txtMaGiaoVien.setText((String) tab.getValueAt(rowSelected, 1));
 		txtTenGiaoVien.setText((String) tab.getValueAt(rowSelected, 2));
 		txtThang.setText((String) tab.getValueAt(rowSelected, 3));

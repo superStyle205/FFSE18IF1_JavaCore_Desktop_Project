@@ -56,7 +56,7 @@ public class quanLyHeThong extends JFrame {
 				JLabel lblBuoc4 = new JLabel("Bước 4: Kiểm tra và nhập,sửa,xóa,...lương giáo viên");
 				lblBuoc4.setFont(font);
 				JLabel lblBuoc5 = new JLabel("Bước 5: Kiểm tra và nhập,sửa,xóa,...điểm học sinh");
-				lblBuoc4.setFont(font);
+				lblBuoc5.setFont(font);
 				pnleftHuongDan.add(lblBuoc1);
 				pnleftHuongDan.add(lblBuoc2);
 				pnleftHuongDan.add(lblBuoc3);

@@ -78,7 +78,7 @@ public class userDaoQuanLyLuong {
 	}
 
 	public void updateUser(salary slr) {
-		String sql = "UPDATE luong SET maGiaoVien = ?, tenGiaoVien = ?, thang = ?, heSoLuong = ?,  phuCap = ?, soNgayLamViec = ?, luongTamUng = ?,tienLuong = ?, tienThuong = ?, ghiChu = ?  WHERE id = ?";
+		String sql = "UPDATE `luong` SET `maGiaoVien`= ?,`tenGiaoVien`= ?,`thang`= ?,`heSoLuong`= ?,`phuCap`= ?,`soNgayLamViec`= ? ,`luongTamUng`= ?,`tienLuong`= ?,`tienThuong`= ?,`tongLuong`= ?,`ghiChu`= ? WHERE id = ?";
 		ConnectUtil connectUtil = new ConnectUtil();
 		Connection conn = connectUtil.getConnect("localhost", "quanly", "root", "");
 		try {
@@ -93,9 +93,9 @@ public class userDaoQuanLyLuong {
 			statement.setInt(7, slr.getLuongTamUng());
 			statement.setInt(8, slr.getTienLuong());
 			statement.setInt(9, slr.getTienThuong());
-//			statement.setInt(9, slr.getTongLuong());
-			statement.setString(10, slr.getGhiChu());
-			statement.setString(11, slr.getId());
+			statement.setInt(10, slr.getTongLuong());
+			statement.setString(11, slr.getGhiChu());
+			statement.setString(12, slr.getId());
 			statement.executeUpdate();
 
 		} catch (SQLException e) {
@@ -120,4 +120,45 @@ public class userDaoQuanLyLuong {
 			connectUtil.disconnect(conn);
 		}
 	}
+	
+	public salary search(String tenGiaoVien){
+		salary slr = null;
+		String sql = "SELECT * FROM luong WHERE tenGiaoVien = ?";
+
+		ConnectUtil connectUtil = new ConnectUtil();
+		Connection conn = connectUtil.getConnect("localhost", "quanly", "root", "");
+
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+
+			statement.setString(1, tenGiaoVien);
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+				slr = new salary();
+
+				slr.setId(result.getString("id"));
+				slr.setMaGiaoVien(result.getString("maGiaoVien"));
+				slr.setTenGiaoVien(result.getString("tenGiaoVien"));
+				slr.setThang(result.getInt("thang"));
+				slr.setHeSoLuong(result.getInt("heSoLuong"));
+				slr.setPhuCap(result.getInt("phuCap"));
+				slr.setNgayLamViec(result.getInt("soNgayLamViec"));
+				slr.setLuongTamUng(result.getInt("luongTamUng"));
+				slr.setTienLuong(result.getInt("tienLuong"));
+				slr.setTienThuong(result.getInt("tienThuong"));
+				slr.setTongLuong(result.getInt("tongluong"));
+				slr.setGhiChu(result.getString("ghiChu"));
+				
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+		} finally {
+			connectUtil.disconnect(conn);
+		}
+		return slr;
+	}
+	
 }

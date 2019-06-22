@@ -9,6 +9,7 @@ import java.util.List;
 
 import projectManagementSchool.ConnectUtil.ConnectUtil;
 import projectManagementSchool.model.hocSinhTrongLop;
+import projectManagementSchool.model.salary;
 
 public class userDaoQuanLyHocSinhTrongLop {
 //	public static boolean isExistUser(String username, String password) {
@@ -96,7 +97,7 @@ public class userDaoQuanLyHocSinhTrongLop {
 		Connection conn = connectUtil.getConnect("localhost", "quanly", "root", "");
 		try {
 			PreparedStatement statement = conn.prepareStatement(sql);
-			
+
 			statement.setString(1, hstl.getMaLop());
 			statement.setString(2, hstl.getMaHocSinh());
 			statement.setString(3, hstl.getTenHocSinh());
@@ -128,6 +129,42 @@ public class userDaoQuanLyHocSinhTrongLop {
 		} finally {
 			connectUtil.disconnect(conn);
 		}
+	}
+
+	public hocSinhTrongLop search(String tenHocSinh) {
+		hocSinhTrongLop hstl = null;
+		String sql = "SELECT * FROM hocsinhtronglop WHERE tenHocSinh = ?";
+
+		ConnectUtil connectUtil = new ConnectUtil();
+		Connection conn = connectUtil.getConnect("localhost", "quanly", "root", "");
+
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+
+			statement.setString(1, tenHocSinh);
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+				hstl = new hocSinhTrongLop();
+
+				hstl.setId(result.getString("id"));
+				hstl.setMaLop(result.getString("maLop"));
+				hstl.setMaHocSinh(result.getString("maHocSinh"));
+				hstl.setTenHocSinh(result.getString("tenHocSinh"));
+				hstl.setGioiTinh(result.getString("gioiTinh"));
+				hstl.setNgaySinh(result.getString("ngaySinh"));
+				hstl.setHanhKiem(result.getString("hanhKiem"));
+				hstl.setGhiChu(result.getString("ghiChu"));
+
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+		} finally {
+			connectUtil.disconnect(conn);
+		}
+		return hstl;
 	}
 
 }

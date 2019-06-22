@@ -109,4 +109,40 @@ public class userDaoQuanLyLop {
 		}
 	}
 
+	public Lop search(String tenLop){
+		Lop lop = null;
+		String sql = "SELECT * FROM lop WHERE tenLop = ?";
+
+		ConnectUtil connectUtil = new ConnectUtil();
+		Connection conn = connectUtil.getConnect("localhost", "quanly", "root", "");
+
+		try {
+			PreparedStatement statement = conn.prepareStatement(sql);
+
+			statement.setString(1, tenLop);
+			ResultSet result = statement.executeQuery();
+
+			while (result.next()) {
+				lop = new Lop();
+
+				lop.setId(result.getString("id"));
+				lop.setMaKhoi(result.getString("maKhoi"));
+				lop.setMaLop(result.getString("maLop"));
+				lop.setTenLop(result.getString("tenLop"));
+				lop.setMaNhanVien(result.getString("maNhanVien"));
+				lop.setTenNhanVien(result.getString("tenNhanVien"));
+				lop.setNienKhoa(result.getString("nienKhoa"));
+				lop.setGhiChu(result.getString("ghiChu"));
+				
+			}
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+		} finally {
+			connectUtil.disconnect(conn);
+		}
+		return lop;
+	}
+	
 }

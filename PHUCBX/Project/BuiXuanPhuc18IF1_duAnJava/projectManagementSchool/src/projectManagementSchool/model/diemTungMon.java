@@ -2,14 +2,15 @@ package projectManagementSchool.model;
 
 public class diemTungMon {
 	private String id, maLop, maMon, maHocKi, maHocSinh, tenHocSinh, ghiChu;
-	private String mieng, diem15pLan1, diem15pLan2, diem1Tiet, diemHocKi;
+	private Double mieng, diem15pLan1, diem15pLan2, diem1Tiet, diemHocKi, diemTrungBinh;
 
 	public diemTungMon() {
 		super();
 	}
 
 	public diemTungMon(String id, String maLop, String maMon, String maHocKi, String maHocSinh, String tenHocSinh,
-			String ghiChu, String mieng, String diem15pLan1, String diem15pLan2, String diem1Tiet, String diemHocKi) {
+			String ghiChu, Double mieng, Double diem15pLan1, Double diem15pLan2, Double diem1Tiet, Double diemHocKi,
+			Double diemTrungBinh) {
 		super();
 		this.id = id;
 		this.maLop = maLop;
@@ -22,6 +23,7 @@ public class diemTungMon {
 		this.diem15pLan2 = diem15pLan2;
 		this.diem1Tiet = diem1Tiet;
 		this.diemHocKi = diemHocKi;
+		this.diemTrungBinh = diemTrungBinh;
 		this.ghiChu = ghiChu;
 	}
 
@@ -81,44 +83,54 @@ public class diemTungMon {
 		this.ghiChu = ghiChu;
 	}
 
-	public String getMieng() {
+	public Double getMieng() {
 		return mieng;
 	}
 
-	public void setMieng(String mieng) {
+	public void setMieng(Double mieng) {
 		this.mieng = mieng;
 	}
 
-	public String getDiem15pLan1() {
+	public Double getDiem15pLan1() {
 		return diem15pLan1;
 	}
 
-	public void setDiem15pLan1(String diem15pLan1) {
+	public void setDiem15pLan1(Double diem15pLan1) {
 		this.diem15pLan1 = diem15pLan1;
 	}
 
-	public String getDiem15pLan2() {
+	public Double getDiem15pLan2() {
 		return diem15pLan2;
 	}
 
-	public void setDiem15pLan2(String diem15pLan2) {
+	public void setDiem15pLan2(Double diem15pLan2) {
 		this.diem15pLan2 = diem15pLan2;
 	}
 
-	public String getDiem1Tiet() {
+	public Double getDiem1Tiet() {
 		return diem1Tiet;
 	}
 
-	public void setDiem1Tiet(String diem1Tiet) {
+	public void setDiem1Tiet(Double diem1Tiet) {
 		this.diem1Tiet = diem1Tiet;
 	}
 
-	public String getDiemHocKi() {
+	public Double getDiemHocKi() {
 		return diemHocKi;
 	}
 
-	public void setDiemHocKi(String diemHocKi) {
+	public void setDiemHocKi(Double diemHocKi) {
 		this.diemHocKi = diemHocKi;
+	}
+
+	public void setDiemTrungBinh(Double diemTrungBinh) {
+		this.diemTrungBinh = diemTrungBinh;
+	}
+
+	public Double getDiemTrungBinh() {
+		Double diemTrungBinh = (getMieng() + getDiem15pLan1() + getDiem15pLan2() + (getDiem1Tiet() * 2)
+				+ (getDiemHocKi() * 3)) / 8;
+		return diemTrungBinh;
 	}
 
 }
