@@ -98,13 +98,16 @@ public class FormLogin extends JFrame implements  ActionListener {
 					JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ tài khoản và mật khẩu");
 				}else {//Ngược lại, tài khoản và mật khẩu nhập vào.
 					UserDao userDao = new UserDao();
-					if(userDao.isLogint(username.getText(), String.valueOf(password.getPassword()))) {
-						JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
-						MainApp main = new MainApp();
-						new MainFrame();				
-						dispose();
-					} else {
+					if(userDao.isLogint(username.getText(), String.valueOf(password.getPassword()))==0) {
 						JOptionPane.showMessageDialog(this, "Đăng nhập thất bại");
+						
+						
+					}else if(userDao.isLogint(username.getText(), String.valueOf(password.getPassword()))==1){
+						JOptionPane.showMessageDialog(this, "Đăng nhập user");
+					}
+					else {
+						MainApp app = new MainApp();
+						new MainFrame();
 					}
 					
 				}
