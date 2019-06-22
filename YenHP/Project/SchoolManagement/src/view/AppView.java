@@ -468,14 +468,12 @@ public class AppView extends JFrame implements ActionListener {
 		panelChNangHS.add(btnSuaHS);
 		Icon iconSuaHS = new ImageIcon("technics.png");
 		btnSuaHS.setIcon(iconSuaHS);
-		btnSuaHS.setEnabled(false);
 
 		btnXoaHS = new JButton("Xóa");
 		btnXoaHS.setBounds(79, 139, 111, 28);
 		panelChNangHS.add(btnXoaHS);
 		Icon iconXoaHS = new ImageIcon("cancel.png");
 		btnXoaHS.setIcon(iconXoaHS);
-		btnXoaHS.setEnabled(false);
 
 		btnLamMoiHS = new JButton("Làm Mới");
 		btnLamMoiHS.setBounds(79, 188, 111, 29);
@@ -602,8 +600,6 @@ public class AppView extends JFrame implements ActionListener {
 				txtGhChuHS.setText((String) jtableHS.getValueAt(rowSelectedHS, 12));
 
 				btnThemHS.setEnabled(false);
-				btnSuaHS.setEnabled(true);
-				btnXoaHS.setEnabled(true);
 			}
 		});
 		;
@@ -795,14 +791,12 @@ public class AppView extends JFrame implements ActionListener {
 		panelChNangGV.add(btnSuaGV);
 		Icon iconSuaGV = new ImageIcon("technics.png");
 		btnSuaGV.setIcon(iconSuaGV);
-		btnSuaGV.setEnabled(false);
 
 		btnXoaGV = new JButton("Xóa");
 		btnXoaGV.setBounds(79, 95, 111, 28);
 		panelChNangGV.add(btnXoaGV);
 		Icon iconXoaGV = new ImageIcon("cancel.png");
 		btnXoaGV.setIcon(iconXoaGV);
-		btnXoaGV.setEnabled(false);
 
 		btnLamMoiGV = new JButton("Làm Mới");
 		btnLamMoiGV.setBounds(79, 134, 111, 29);
@@ -915,8 +909,6 @@ public class AppView extends JFrame implements ActionListener {
 				txtGhChuGV.setText((String) jtableGV.getValueAt(rowSelectedGV, 8));
 
 				btnThemGV.setEnabled(false);
-				btnSuaGV.setEnabled(true);
-				btnXoaGV.setEnabled(true);
 			}
 		});
 		scrollPaneGV = new JScrollPane(jtableGV);
@@ -1019,12 +1011,10 @@ public class AppView extends JFrame implements ActionListener {
 		btnSuaLop = new JButton("Sửa");
 		btnSuaLop.setBounds(217, 35, 111, 29);
 		panelCNangLop.add(btnSuaLop);
-		btnSuaLop.setEnabled(false);
 
 		btnXoaLop = new JButton("Xóa");
 		btnXoaLop.setBounds(359, 35, 111, 28);
 		panelCNangLop.add(btnXoaLop);
-		btnXoaLop.setEnabled(false);
 
 		btnLamMoiLop = new JButton("Làm Mới");
 		btnLamMoiLop.setBounds(496, 35, 111, 29);
@@ -1093,8 +1083,6 @@ public class AppView extends JFrame implements ActionListener {
 
 				txtMaLopHoc.setEnabled(false);
 				btnThemLop.setEnabled(false);
-				btnSuaLop.setEnabled(true);
-				btnXoaLop.setEnabled(true);
 			}
 		});
 		scrollLop = new JScrollPane(jtableLop);
@@ -1265,12 +1253,10 @@ public class AppView extends JFrame implements ActionListener {
 		btnSuaDiem = new JButton("Sửa");
 		btnSuaDiem.setBounds(217, 35, 111, 29);
 		panelChNangDiem.add(btnSuaDiem);
-		btnSuaDiem.setEnabled(false);
 
 		btnXoaDiem = new JButton("Xóa");
 		btnXoaDiem.setBounds(359, 35, 111, 28);
 		panelChNangDiem.add(btnXoaDiem);
-		btnXoaDiem.setEnabled(false);
 
 		btnLamMoiDiem = new JButton("Làm Mới");
 		btnLamMoiDiem.setBounds(496, 35, 111, 29);
@@ -1360,8 +1346,6 @@ public class AppView extends JFrame implements ActionListener {
 
 				txtMaHocSinh_Diem.setEnabled(false);
 				btnThemDiem.setEnabled(false);
-				btnSuaDiem.setEnabled(true);
-				btnXoaDiem.setEnabled(true);
 			}
 		});
 		scrollDiem = new JScrollPane(jtableDiem);
@@ -1463,12 +1447,10 @@ public class AppView extends JFrame implements ActionListener {
 		btnSuaMon = new JButton("Sửa");
 		btnSuaMon.setBounds(217, 35, 111, 29);
 		panelCNangMon.add(btnSuaMon);
-		btnSuaMon.setEnabled(false);
 
 		btnXoaMon = new JButton("Xóa");
 		btnXoaMon.setBounds(359, 35, 111, 28);
 		panelCNangMon.add(btnXoaMon);
-		btnXoaMon.setEnabled(false);
 
 		btnLamMoiMon = new JButton("Làm Mới");
 		btnLamMoiMon.setBounds(496, 35, 111, 29);
@@ -1524,7 +1506,7 @@ public class AppView extends JFrame implements ActionListener {
 		tableMon.addColumn("Mã Môn");
 		tableMon.addColumn("Tên Môn");
 		tableMon.addColumn("Mã Giáo Viên");
-		tableMon.addColumn("Tên Giáo Viên");
+		tableMon.addColumn("Tên Giáo Viên bộ môn");
 		tableMon.addColumn("Ghi Chú");
 
 		jtableMon = new JTable(tableMon);
@@ -1539,8 +1521,6 @@ public class AppView extends JFrame implements ActionListener {
 
 				txtMaMon_Mon.setEnabled(false);
 				btnThemMon.setEnabled(false);
-				btnSuaMon.setEnabled(true);
-				btnXoaMon.setEnabled(true);
 			}
 		});
 		scrollMon = new JScrollPane(jtableMon);
@@ -1661,11 +1641,19 @@ public class AppView extends JFrame implements ActionListener {
 				loadDataforTableHS();
 			}
 		} else if (action == btnSuaHS) {
-			updateStudent();
-			loadDataforTableHS();
+			if (checkIDHSSX() == false) {
+				JOptionPane.showMessageDialog(null, "Chưa có thông tin để thực hiện hành động này");
+			} else {
+				updateStudent();
+				loadDataforTableHS();
+			}
 		} else if (action == btnXoaHS) {
-			deleteStudent();
-			loadDataforTableHS();
+			if (checkIDHSSX() == false) {
+				JOptionPane.showMessageDialog(null, "Chưa có thông tin để thực hiện hành động này");
+			} else {
+				deleteStudent();
+				loadDataforTableHS();
+			}
 		} else if (action == btnLamMoiHS) {
 			cleanStudent();
 			loadDataforTableHS();
@@ -1677,11 +1665,19 @@ public class AppView extends JFrame implements ActionListener {
 				loadDataforTableGV();
 			}
 		} else if (action == btnSuaGV) {
-			updateTeacher();
-			loadDataforTableGV();
+			if (checkIDGVSX() == false) {
+				JOptionPane.showMessageDialog(null, "Chưa có thông tin để thực hiện hành động này");
+			} else {
+				updateTeacher();
+				loadDataforTableGV();
+			}
 		} else if (action == btnXoaGV) {
-			deleteTeacher();
-			loadDataforTableGV();
+			if (checkIDGVSX() == false) {
+				JOptionPane.showMessageDialog(null, "Chưa có thông tin để thực hiện hành động này");
+			} else {
+				deleteTeacher();
+				loadDataforTableGV();
+			}
 		} else if (action == btnLamMoiGV) {
 			cleanTeacher();
 			loadDataforTableGV();
@@ -1701,15 +1697,23 @@ public class AppView extends JFrame implements ActionListener {
 				}
 			}
 		} else if (action == btnSuaLop) {
-			updateClassStudent();
-			comboBoxHS.removeAllItems();
-			getIdLop();
-			loadDataforTableLop();
+			if (checkIDLopSX() == false) {
+				JOptionPane.showMessageDialog(null, "Chưa có thông tin để thực hiện hành động này");
+			} else {
+				updateClassStudent();
+				comboBoxHS.removeAllItems();
+				getIdLop();
+				loadDataforTableLop();
+			}
 		} else if (action == btnXoaLop) {
-			deleteClassStudent();
-			comboBoxHS.removeAllItems();
-			getIdLop();
-			loadDataforTableLop();
+			if (checkIDLopSX() == false) {
+				JOptionPane.showMessageDialog(null, "Chưa có thông tin để thực hiện hành động này");
+			} else {
+				deleteClassStudent();
+				comboBoxHS.removeAllItems();
+				getIdLop();
+				loadDataforTableLop();
+			}
 		} else if (action == btnLamMoiLop) {
 			cleanLop();
 		} else if (action == btnThemDiem) {
@@ -1730,11 +1734,19 @@ public class AppView extends JFrame implements ActionListener {
 				}
 			}
 		} else if (action == btnSuaDiem) {
-			updateDiem();
-			loadDataforTableDiem();
+			if (checkIDDiemSX() == false) {
+				JOptionPane.showMessageDialog(null, "Chưa có thông tin để thực hiện hành động này");
+			} else {
+				updateDiem();
+				loadDataforTableDiem();
+			}
 		} else if (action == btnXoaDiem) {
-			deleteDiem();
-			loadDataforTableDiem();
+			if (checkIDDiemSX() == false) {
+				JOptionPane.showMessageDialog(null, "Chưa có thông tin để thực hiện hành động này");
+			} else {
+				deleteDiem();
+				loadDataforTableDiem();
+			}
 		} else if (action == btnLamMoiDiem) {
 			cleanDiem();
 		} else if (action == btnThemMon) {
@@ -1751,15 +1763,23 @@ public class AppView extends JFrame implements ActionListener {
 				}
 			}
 		} else if (action == btnSuaMon) {
-			updateMon();
-			jcomboBoxDiem.removeAllItems();
-			getIdMon();
-			loadDataforTableMon();
+			if (checkIDMonSX() == false) {
+				JOptionPane.showMessageDialog(null, "Chưa có thông tin để thực hiện hành động này");
+			} else {
+				updateMon();
+				jcomboBoxDiem.removeAllItems();
+				getIdMon();
+				loadDataforTableMon();
+			}
 		} else if (action == btnXoaMon) {
-			deleteMon();
-			jcomboBoxDiem.removeAllItems();
-			getIdMon();
-			loadDataforTableMon();
+			if (checkIDMonSX() == false) {
+				JOptionPane.showMessageDialog(null, "Chưa có thông tin để thực hiện hành động này");
+			} else {
+				deleteMon();
+				jcomboBoxDiem.removeAllItems();
+				getIdMon();
+				loadDataforTableMon();
+			}
 		} else {
 			cleanMon();
 		}
@@ -1996,7 +2016,7 @@ public class AppView extends JFrame implements ActionListener {
 		group.clearSelection();
 		txtQuQuan.setText("");
 		txtSDTHS.setText("");
-		comboBoxHS.setSelectedItem("");
+		comboBoxHS.setSelectedItem("A1");
 		txtTenCha.setText("");
 		txtTenMe.setText("");
 		txtSDTPhHuynh.setText("");
@@ -2025,8 +2045,6 @@ public class AppView extends JFrame implements ActionListener {
 		}
 
 		btnThemHS.setEnabled(true);
-		btnSuaHS.setEnabled(false);
-		btnXoaHS.setEnabled(false);
 	}
 
 	public void cleanTeacher() {
@@ -2061,8 +2079,6 @@ public class AppView extends JFrame implements ActionListener {
 		}
 
 		btnThemGV.setEnabled(true);
-		btnSuaGV.setEnabled(false);
-		btnXoaGV.setEnabled(false);
 	}
 
 	private void cleanLop() {
@@ -2083,8 +2099,6 @@ public class AppView extends JFrame implements ActionListener {
 
 		txtMaLopHoc.setEnabled(true);
 		btnThemLop.setEnabled(true);
-		btnSuaLop.setEnabled(false);
-		btnXoaLop.setEnabled(false);
 	}
 
 	private void cleanDiem() {
@@ -2111,8 +2125,6 @@ public class AppView extends JFrame implements ActionListener {
 
 		btnThemDiem.setEnabled(true);
 		txtMaHocSinh_Diem.setEnabled(true);
-		btnSuaDiem.setEnabled(false);
-		btnXoaDiem.setEnabled(false);
 	}
 
 	private void cleanMon() {
@@ -2134,8 +2146,6 @@ public class AppView extends JFrame implements ActionListener {
 
 		txtMaMon_Mon.setEnabled(true);
 		btnThemMon.setEnabled(true);
-		btnSuaMon.setEnabled(false);
-		btnXoaMon.setEnabled(false);
 	}
 
 	// các hàm checkvalue dùng để ràng buộc 1 số ô phải có dữ liệu
@@ -2415,5 +2425,50 @@ public class AppView extends JFrame implements ActionListener {
 
 		}
 		return fixDiem;
+	}
+
+	// hàm dùng ràng buộc khi sửa xóa học sinh
+	private boolean checkIDHSSX() {
+		boolean checkIDSX = true;
+		if (txtMaHS.getText().toString().length() == 0) {
+			checkIDSX = false;
+		}
+		return checkIDSX;
+	}
+
+	// hàm dùng ràng buộc khi sửa xóa giáo viên
+	private boolean checkIDGVSX() {
+		boolean checkIDGVSX = true;
+		if (txtMaGV.getText().toString().length() == 0) {
+			checkIDGVSX = false;
+		}
+		return checkIDGVSX;
+	}
+
+	// hàm dùng ràng buộc khi sửa xóa Lớp
+	private boolean checkIDLopSX() {
+		boolean checkIDLopSX = true;
+		if (txtMaLopHoc.getText().toString().length() == 0) {
+			checkIDLopSX = false;
+		}
+		return checkIDLopSX;
+	}
+
+	// hàm dùng ràng buộc khi sửa xóa Điểm
+	private boolean checkIDDiemSX() {
+		boolean checkIDDiemSX = true;
+		if (txtMaHocSinh_Diem.getText().toString().length() == 0) {
+			checkIDDiemSX = false;
+		}
+		return checkIDDiemSX;
+	}
+
+	// hàm dùng ràng buộc khi sửa xóa môn
+	private boolean checkIDMonSX() {
+		boolean checkIDMonSX = true;
+		if (txtMaMon_Mon.getText().toString().length() == 0) {
+			checkIDMonSX = false;
+		}
+		return checkIDMonSX;
 	}
 }
